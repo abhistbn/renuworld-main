@@ -1,0 +1,22 @@
+name: Deploy to DigitalOcean VPS
+
+on:
+  push:
+    branches:
+      - main  # Replace 'main' with your branch name
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH into VPS and Pull Changes
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /var/www/serica.dimas.lol  # Update with your project's path
+            git pull origin main       # Update 'main' if necessary
